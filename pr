@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ "$1" -eq "2" ]
+then
+	echo "PageRank Phase 2"
+	rm -rf phase2_output
+	jar cvf Phase2.jar Phase2*.class
+	hadoop jar Phase2.jar Phase2 phase1_output/part-00000 phase2_output_1
+fi
