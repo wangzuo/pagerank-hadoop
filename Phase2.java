@@ -30,20 +30,22 @@ public class Phase2 extends Configured implements Tool {
 		public void map(Text key, Text value, OutputCollector<Text, Text> output,
 				Reporter reporter) throws IOException {
 			// TODO Auto-generated method stub
-			
 			String[] parts = value.toString().split(":");
-			String PRStr = parts[0];
-			String nodesStr = parts[1];
-			String[] nodes = nodesStr.split(",");
 			
-			int count = nodes.length;
-			for(int i = 0; i < nodes.length; i++) {
-				String tmp = PRStr;
-				tmp += ":";
-				tmp += Integer.toString(count);
-				output.collect(new Text(nodes[i]), new Text(tmp));
+			if(parts.length > 1) {
+				String PRStr = parts[0];
+				String nodesStr = parts[1];
+				String[] nodes = nodesStr.split(",");
+				
+				int count = nodes.length;
+				for(int i = 0; i < nodes.length; i++) {
+					String tmp = PRStr;
+					tmp += ":";
+					tmp += Integer.toString(count);
+					output.collect(new Text(nodes[i]), new Text(tmp));
+				}
+				output.collect(key, new Text(nodesStr));
 			}
-			output.collect(key, new Text(nodesStr));
 		}
 	}
 	
@@ -79,13 +81,15 @@ public class Phase2 extends Configured implements Tool {
 					float PR = Float.parseFloat(parts[0]);
 					int links = Integer.parseInt(parts[1]);
 					newPR += (PR/links*damping + (1-damping)); // updating PageRank
-				} else {
+				} else if(parts.length == 1) {
+					// System.out.printf("(%s, %s)\n", key.toString(), value);
 					nodesStr = value;
 				}
 			}
 			String tmp = Float.toString(newPR);
 			tmp += ":";
 			tmp += nodesStr;
+			//System.out.printf("[%s][%s]", key, tmp);
 			output.collect(key, new Text(tmp));
 		}
 	}

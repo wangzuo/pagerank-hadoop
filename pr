@@ -1,9 +1,40 @@
 #!/bin/bash
 
+if [ "$1" -eq "1" ]
+then
+	echo "Starting PageRank phase 1"
+	echo "Removing old files"
+	rm -rf phase1_output Phase1*.class
+	echo "Compling phase1 source file"
+	javac -classpath /usr/local/Cellar/hadoop/1.0.3/libexec/hadoop-core-1.0.3.jar Phase1.java
+	echo "Creating jar file"
+	jar cvf Phase1.jar Phase1*.class
+	echo "Running hadoop"
+	hadoop jar Phase1.jar Phase1 graph_input phase1_output
+fi
+
 if [ "$1" -eq "2" ]
 then
-	echo "PageRank Phase 2"
-	rm -rf phase2_output
+	
+	
+	iteration=${2-5}
+
+	echo "Starting PageRank Phase 2"
+	echo "Removing old files"
+	rm -rf phase2_output* Phase2*.class
+
+	mkdir phase2_output_0
+	cp phase1_output/* phase2_output_0
+
+	echo "Compling phase2 source file";
+	javac -classpath /usr/local/Cellar/hadoop/1.0.3/libexec/hadoop-core-1.0.3.jar Phase2.java
+	echo "Creating jar file"
 	jar cvf Phase2.jar Phase2*.class
-	hadoop jar Phase2.jar Phase2 phase1_output/part-00000 phase2_output_1
+	echo "Starting Hadoop iterations"
+
+	for (( i=0; i < $iteration; i++ ))
+	do
+		echo "Iteration `expr $i + 1`"
+		hadoop jar Phase2.jar Phase2 "phase2_output_$i" "phase2_output_`expr $i + 1`"
+	done
 fi

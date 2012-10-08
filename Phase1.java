@@ -17,6 +17,7 @@ import org.apache.hadoop.mapred.Reducer;
 import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.mapred.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
 
 
 public class Phase1 extends Configured implements Tool {
@@ -71,7 +72,7 @@ public class Phase1 extends Configured implements Tool {
         job.setReducerClass(Phase1Reducer.class);
 
         job.setInputFormat(KeyValueTextInputFormat.class);
-        job.set("key.value.separator.in.input.line", " ");
+        job.set("key.value.separator.in.input.line", "\t");
 
         job.setOutputFormat(TextOutputFormat.class);
         
@@ -82,8 +83,8 @@ public class Phase1 extends Configured implements Tool {
 		return 0;
 	}
 
-//	public static void main(String[] args) throws Exception {
-//		int res = ToolRunner.run(new Configuration(), new Phase1(), args);
-//      System.exit(res);
-//	}
+	public static void main(String[] args) throws Exception {
+		int res = ToolRunner.run(new Configuration(), new Phase1(), args);
+      System.exit(res);
+	}
 }
