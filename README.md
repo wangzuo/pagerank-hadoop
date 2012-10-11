@@ -56,7 +56,9 @@ PageRank results usually present in a probility distribution. In MapReduce progr
 				**(B, C)**
 				**(C, AD)**
 				**(D, B)**
+```
 ##### reduce
+```
 (D, 1:1)		(A, (0.5:D))
 (C, 1:1)		(B, (1.0:C))
 (A, 1:2)		(C, (1.0:A,D))
@@ -70,6 +72,7 @@ PageRank results usually present in a probility distribution. In MapReduce progr
 ##### notice
 In mapping process, the graph structure is kept such that it can be iterative.
 updaing PageRank
+
 [new pr] = (dumping_value) * [old pr] + (1 - dumping_value)
 
 #### Phase 3 - Sort the nodes by PageRank
@@ -79,6 +82,7 @@ Sort by PageRank value.
 The program implements simple bash script to do iterative MapReduce. It has to restart the hadoop in each iteration.
 
 [Apache Mahout](http://mahout.apache.org/): restarting needed
+
 [PEGASUS](http://www.cs.cmu.edu/~pegasus/): restarting needed
 
 [haloop](http://code.google.com/p/haloop/): An modified version of Hadoop to support efficient iterative data processing on large commodity clusters
