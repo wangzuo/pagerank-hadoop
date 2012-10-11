@@ -6,7 +6,7 @@ then
 	echo "Removing old files"
 	rm -rf phase1_output Phase1*.class
 	echo "Compling phase1 source file"
-	javac -classpath /usr/local/Cellar/hadoop/1.0.3/libexec/hadoop-core-1.0.3.jar Phase1.java
+	javac -classpath $HADOOP_INSTALL/libexec/hadoop-core-1.0.3.jar Phase1.java
 	echo "Creating jar file"
 	jar cvf Phase1.jar Phase1*.class
 	echo "Running hadoop"
@@ -27,7 +27,7 @@ then
 	cp phase1_output/* phase2_output_0
 
 	echo "Compling phase2 source file";
-	javac -classpath /usr/local/Cellar/hadoop/1.0.3/libexec/hadoop-core-1.0.3.jar Phase2.java
+	javac -classpath $HADOOP_INSTALL/libexec/hadoop-core-1.0.3.jar Phase2.java
 	echo "Creating jar file"
 	jar cvf Phase2.jar Phase2*.class
 	echo "Starting Hadoop iterations"
