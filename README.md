@@ -1,5 +1,5 @@
 ## Introduction
-The program implments a PageRank iterative calculation on a graph with Hadoop. The input data is a directed network (not html documents). There are mainly two phases of map-reduce. The second phase will be the phase to be iterative.
+The program implments a PageRank iterative calculation on a graph with Hadoop. The input data is a directed network (not html documents). There are mainly two phases of map-reduce. The second phase is iterative.
 
 ## Usage
 A bash script `pr` is provided.
@@ -42,7 +42,7 @@ C\tD	(C, D)
 (C, D)
 ```
 #### notice
-PageRank results usually present in a probility distribution. In MapReduce program, there is no idea of number of nodes in the graph, all PageRank values are set 1.0 on initialization.
+PageRank results usually present in a probability distribution. In MapReduce program, there is no idea of number of nodes in the graph, all PageRank values are set to be 1.0 on initialization.
 
 #### Phase 2 - Compute PageRank (Iteratively approach)
 ##### map
