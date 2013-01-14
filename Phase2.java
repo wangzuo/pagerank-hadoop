@@ -74,18 +74,20 @@ public class Phase2 extends Configured implements Tool {
 			float damping = 0.85f;
 			
 			float newPR = 0.0f;
+			float sum = 0.0f;
 			for(int i = 0; i < values2.size(); i++) {
 				String value = values2.get(i);
 				String[] parts = value.split(":");
 				if(parts.length > 1) {
 					float PR = Float.parseFloat(parts[0]);
 					int links = Integer.parseInt(parts[1]);
-					newPR += (PR/links*damping + (1-damping)); // updating PageRank
+					sum += (PR/links);
 				} else if(parts.length == 1) {
 					// System.out.printf("(%s, %s)\n", key.toString(), value);
 					nodesStr = value;
 				}
 			}
+			newPR = (sum*damping + (1-damping)); // updating PageRank
 			String tmp = Float.toString(newPR);
 			tmp += ":";
 			tmp += nodesStr;
